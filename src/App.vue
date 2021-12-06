@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+
+    <router-view class="view one" name="top"></router-view>
+    <router-view class="view two" name="side"></router-view>
+    <div class="side-main">
+      <router-view class="view three"></router-view>
     </div>
-    <router-view/>
+<!--    <router-view class="view one"></router-view>-->
   </div>
 </template>
 
@@ -15,5 +17,27 @@
   -moz-osx-font-smoothing grayscale
   text-align center
   color #2c3e50
-  margin-top 60px
+
+body
+  margin 0;
+
+.side-main{
+  display flex
+  flex-direction row
+  justify-content center
+
+}
+//margin-top 60px
+.one {
+  height 20vh;
+  width 100vw;
+}
+
+.two {
+  width 15vw
+  position absolute
+}
+.three{
+  //width 100vw
+}
 </style>

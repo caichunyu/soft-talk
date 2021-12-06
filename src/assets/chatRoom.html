@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>聊天室</title>
+    <link th:href="@{/asserts/chatroom/lib/jquery-mCustomScrollbar/css/jquery.mCustomScrollbar.min.css}" rel="stylesheet">
+    <link th:href="@{/asserts/chatroom/lib/jquery-emoji/css/jquery.emoji.css}" rel="stylesheet">
+    <link th:href="@{/asserts/chatroom/css/index.css}" rel="stylesheet"/>
+</head>
+<body>
+
+<input id="chatRoomId" type="hidden" th:value="${chatRoomId}">
+<input id="loginUserId" type="hidden" th:value="${session.loginUserId}">
+<div style="font-size : 20px;" class="mylogin">
+
+    <div  th:if="${session.loginUser != null}">
+
+        欢迎，[[${session.loginUser}]]
+        <a th:href="@{/logout}">退出</a>
+        <a th:href="@{/main}">轻聊圈子</a>
+    </div>
+    <div th:if="${session.loginUser == null}">
+
+        <a th:href="@{/login}">登录</a>
+        <a th:href="@{/register}">注册</a>
+        <a th:href="@{/main}">轻聊圈子</a>
+    </div>
+
+</div>
+
+<div class="login_box" style="display: block;">
+    <h3>用户登录</h3>
+    <p>用户名</p>
+    <input type="text" placeholder="请输入用户名" id="username" th:value="${session.loginUser}"/>
+    <p>选择头像</p>
+    <ul class="avatar" id="login_avatar">
+        <li class="now"><img th:src="@{/asserts/chatroom/images/avatar01.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar02.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar03.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar04.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar05.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar06.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar07.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar08.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar09.jpg}" alt="" /></li>
+        <li><img th:src="@{/asserts/chatroom/images/avatar10.jpg}" alt="" /></li>
+    </ul>
+    <button class="weui-btn" id="loginBtn">登录</button>
+</div>
+<div class="container" style="display: none;">
+    <!-- 用户列表 -->
+    <div class="user-list">
+        <div class="header">
+            <div class="avatar">
+                <img class="img" th:src="@{/asserts/chatroom/images/avatar2.jpg}" alt="" />
+            </div>
+            <div class="info"><h3 class="username">清流</h3></div>
+        </div>
+        <div class="title"><h3>用户列表</h3></div>
+        <ul>
+
+        </ul>
+    </div>
+    <!-- 聊天主窗口 -->
+    <div class="box">
+        <!-- 聊天窗口头部 -->
+        <div class="box-hd">
+            <h3>[[${chatRoomId}]]聊天室(<span>99</span>)</h3>
+        </div>
+
+        <!-- 聊天窗口主体区域 -->
+        <div class="box-bd">
+
+                <!--<div class="system">-->
+                  <!--<p class="message_system">-->
+                    <!--<span class="content">"往事随风"邀请你和"Boy"加入了群聊</span>-->
+                  <!--</p>-->
+                <!--</div>-->
+
+                <!--<div class="message-box">-->
+                  <!--<div class="my message">-->
+                    <!--<img class="avatar" th:src="@{/asserts/images/avatar2.jpg}" alt="" />-->
+                    <!--<div class="content">-->
+                      <!--<div class="bubble">-->
+                        <!--<div class="bubble_cont">在干嘛</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="message-box">-->
+                  <!--<div class="other message">-->
+                    <!--<img class="avatar" th:src="@{/asserts/images/avatar02.jpg}" alt="" />-->
+                    <!--<div class="content">-->
+                      <!--<div class="nickname">小美</div>-->
+                      <!--<div class="bubble">-->
+                        <!--<div class="bubble_cont">吃饭</div>-->
+                      <!--</div>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+
+        </div>
+        <!-- 聊天窗口底部区域 -->
+        <div class="box-ft">
+            <!-- 工具栏 -->
+            <div class="toolbar">
+                <a href="javascript:;" title="表情" class="face"></a>
+                <!--<a href="javascript:;" title="截屏" class="screen-cut"> </a>-->
+                <a href="javascript:;" title="图片" class="file">
+                    <label for="file"></label>
+                    <input type="file" id="file" style="display: none;" />
+                </a>
+                <a href="javascript:;" id="save" title="保存聊天记录"> <img style="width: 30px;height: 30px;vertical-align: middle;display: inline-block" th:src="@{/asserts/chatroom/images/upload.png}"></a>
+                <!--<a href="javascript:;" id="download" title="下载聊天记录"> <img style="width: 30px;height: 30px;vertical-align: middle;display: inline-block" th:src="@{/asserts/chatroom/images/download.png}"></a>-->
+            </div>
+            <!-- 内容输入区域 -->
+            <div class="content">
+                <div class="text" id="content" contenteditable></div>
+            </div>
+            <!-- 发送按钮 -->
+            <div class="action">
+                <span class="desc">按下Enter发送,Shift+Enter换行</span>
+                <a class="btn-send" id="btn-send" href="javascript:;">发送</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!--<script th:src="@{js/jquery-1.12.4.js}"></script>-->
+<script type="text/javascript" th:src="@{/asserts/chatroom/lib/jquery-emoji/js/jquery-1.12.4.js}"></script>
+<script th:src="@{/asserts/chatroom/lib/jquery-mCustomScrollbar/script/jquery.mCustomScrollbar.min.js}"></script>
+<script th:src="@{/asserts/chatroom/lib/jquery-emoji/js/jquery.emoji.min.js}"></script>
+
+
+
+
+</body>
+
+<script>
+
+    var socket;
+    var userId = -1;
+    var username;
+    var avatar;
+    var usernum = 0;
+    var chatRoomId = $('#chatRoomId').val();
+    var userAvatarList;
+    var userNameList;
+
+    // $(function(){
+    //     if ($('#loginUserId').val() != ""){
+    //         // 隐藏登录框
+    //         // 显示对话框
+    //         $('.login_box').fadeOut();
+    //         $('.container').fadeIn();
+    //         $('#content').focus();
+    //     }
+    // });
+
+    /*
+      2. 用户头像选择功能
+        给用户头像注册点击事件，排他
+    */
+    $('.login_box .avatar li').on('click', function() {
+        $(this)
+            .addClass('now')
+            .siblings()
+            .removeClass('now')
+    })
+    $('#loginBtn').on('click', function() {
+        // 获取用户名
+        username = $('#username')
+            .val()
+            .trim();
+        //判断用户名是否为空
+        if (!username) return alert('请输入用户名');
+
+        //获取头像
+        avatar = $('.login_box .avatar li.now img').attr('src')
+
+        openSocket()
+
+        // 显示用户信息
+        $('.header .avatar img').attr('src', avatar)
+        $('.header .username').text(username)
+
+        // $('#username').val('')
+    })
+
+    //发送按钮绑定发送消息事件
+    $('#btn-send').on('click',function () {
+        sendMessage()
+    })
+
+    //按下enter发送消息，按下shift+enter换行
+    $(function(){
+        var shiftDown = 0;
+        $(document).keydown(function(event){
+
+            if(event.keyCode == 16)
+            {
+                shiftDown=1;      //shift按下
+            }
+
+            if(event.keyCode ==13){
+                if (shiftDown == 1)
+                {
+                    console.log("测试value值"+$('#content').text())
+
+                    $('#content').append("<br/><br/>");
+
+                    //设置输入焦点
+                    var o = document.getElementById("content").lastChild;
+                    var textbox = document.getElementById('content');
+                    var sel = window.getSelection();
+                    var range = document.createRange();
+                    range.selectNodeContents(textbox);
+                    range.collapse(false);
+                    range.setEndAfter(o);//
+                    range.setStartAfter(o);//
+                    sel.removeAllRanges();
+                    sel.addRange(range);
+
+
+                    shiftDown = 0;
+                }
+                else {
+                    $(".btn-send").trigger("click");
+                }
+
+                return false;
+            }
+        });
+    });
+
+
+    function openSocket() {
+        if(typeof(WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        }else{
+            console.log("您的浏览器支持WebSocket");
+            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+            var socketUrl="ws://121.196.111.125/webSocket/"+username+"/"+chatRoomId+"/"+avatar.replace(/\//g,"_");
+            //var socketUrl="ws://localhost/webSocket/"+username+"/"+chatRoomId+"/"+avatar.replace(/\//g,"_");
+            // console.log(socketUrl);
+            if(socket!=null){
+                socket.close();
+                socket=null;
+            }
+            socket = new WebSocket(socketUrl);
+            //打开事件
+            socket.onopen = function() {
+                console.log("websocket已打开");
+                //socket.send("这是来自客户端的消息" + location.href + new Date());
+            };
+            //获得消息事件
+            socket.onmessage = function(msg) {
+                var serverMsg = "收到服务端信息：" + msg.data;
+                console.log(serverMsg);
+                //发现消息进入    开始处理前端触发逻辑
+
+                var data1 = JSON.parse(msg.data);
+
+
+                //获得在线人数
+                usernum = data1.usernum;
+                $('.box-hd span').text(usernum)
+
+                //进入或者退出聊天室信息
+                if (data1.type == 0 || data1.type ==1){
+
+                    //获得用户Id
+                    if (userId == -1){
+                        userId = data1.userId;
+                    }
+                    $('.box-bd')
+                        .append(`
+                            <div class="system">
+                              <p class="message_system">
+                                <span class="content">${data1.msg}</span>
+                              </p>
+                            </div>
+                          `);
+
+                    //更新左侧用户列表
+                    $('.user-list ul').html('')
+                    //进入或退出聊天室时获得用户列表
+                    userAvatarList = data1.userAvatarList;
+                    userNameList = data1.userNameList;
+
+                    for(var key in userNameList){
+                        // console.log("key的值："+key,userList[key])
+                            $('.user-list ul').append(`
+                               <li class="user">
+                                  <div class="avatar"><img src="${userAvatarList[key]}" alt="" /></div>
+                                  <div class="name">${userNameList[key]}</div>
+                                </li>
+                            `)
+                    }
+                }
+                //客户端发送的撤回消息类型
+                else if(data1.type == 4)
+                {
+                    if(data1.userId == userId){}
+                    else {
+                        replace(data1.msg,data1.username);
+                    }
+                }
+                //客户端发送的信息
+                else if(data1.type == 2){
+                    // 判断是否是自己发送的消息
+                    if (data1.userId == userId){
+                        $('.box-bd').append(`
+                          <div class="message-box" id="msg${data1.msgId}">
+                            <div class="my message">
+                              <img class="avatar" src="${avatar}" alt="" />
+                              <div class="content">
+                                <img onclick="recall(${data1.msgId})" style="width: 12px;height: 12px;margin-right: 0px;margin-top: 15px;cursor: pointer" src="/asserts/chatroom/images/recall.png">
+                                <div class="bubble">
+                                  <div class="bubble_cont">${data1.msg}</div>
+                                </div>
+
+                              </div>
+
+                            </div>
+                          </div>
+                        `);
+                    }
+                    else {
+                        $('.box-bd').append(`
+                          <div class="message-box" id="msg${data1.msgId}">
+                            <div class="other message">
+                              <img class="avatar" src="${data1.avatar}" alt="" />
+                              <div class="content">
+                                <div class="nickname">${data1.username}</div>
+                                <div class="bubble">
+                                  <div class="bubble_cont">${data1.msg}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        `)
+                    }
+
+                }
+                //客户端发送的图片信息
+                else {
+                    // 判断消息是否是自己发送的
+                    if (data1.userId == userId) {
+                        // 自己发送的消息
+                        $('.box-bd').append(`
+                          <div class="message-box" id="msg${data1.msgId}">
+                            <div class="my message">
+                              <img class="avatar" src="${data1.avatar}" alt="" />
+                              <div class="content">
+                              <img onclick="recall(${data1.msgId})" style="width: 12px;height: 12px;margin-right: 0px;margin-top: 15px;cursor: pointer" src="/asserts/chatroom/images/recall.png">
+                                <div class="bubble">
+                                  <div class="bubble_cont">
+                                    <img src="${data1.msg}">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        `)
+                    } else {
+                        $('.box-bd').append(`
+                          <div class="message-box"  id="msg${data1.msgId}">
+                            <div class="other message">
+                              <img class="avatar" src="${data1.avatar}" alt="" />
+                              <div class="content">
+                                <div class="nickname">${data1.username}</div>
+                                <div class="bubble">
+                                  <div class="bubble_cont">
+                                    <img src="${data1.msg}">
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        `)
+                    }
+                }
+
+                $('.box-bd')
+                    .children(':last')
+                    .get(0)
+                    .scrollIntoView(false)
+
+            };
+            //关闭事件
+            socket.onclose = function() {
+
+                console.log("websocket已关闭");
+                alert("连接已关闭...");
+                socket = null;
+                location.reload();
+            };
+            //发生了错误事件
+            socket.onerror = function() {
+                console.log("websocket发生了错误");
+                alert("连接已关闭...");
+                socket = null;
+            }
+
+            // 隐藏登录框
+            // 显示对话框
+            $('.login_box').fadeOut();
+            $('.container').fadeIn();
+            $('#content').focus();
+        }
+    }
+
+
+    function sendMessage() {
+        if(typeof(WebSocket) == "undefined") {
+            console.log("您的浏览器不支持WebSocket");
+        }else {
+            console.log("您的浏览器支持WebSocket");
+
+            console.log(username);
+
+            var content = $('#content').html();
+            $('#content').html('');
+            if (!content) return alert('请输入聊天内容');
+
+             var msg = {
+                 userId: userId,
+                 username: username,
+                 avatar: avatar,
+                 content: content,
+                 type : 2
+             };
+
+            console.log(content);
+            socket.send(JSON.stringify(msg));
+        }
+    }
+
+    function recall(msgId) {
+        //$("#addImg"+num).remove();
+        //跳出确认框，确认之后撤回消息
+        if (confirm("确认撤回")){
+            replace(msgId,username);
+            var msg = {
+                userId: userId,
+                username: username,
+                content: msgId,
+                type : 4
+            };
+
+            console.log(content);
+            socket.send(JSON.stringify(msg));
+            console.log("撤回消息");
+        }
+
+
+
+    }
+
+    //替换撤回消息
+    function replace(msgId,username){
+        $("#msg"+msgId).replaceWith(`
+                            <div class="system">
+                              <p class="message_system">
+                                <span class="content">${username}撤回了一条消息</span>
+                              </p>
+                            </div>
+                          `);
+    }
+
+
+    // 发送图片功能
+    $('#file').on('change', function() {
+        // 获取到该图片
+        var file = this.files[0];
+        var fr = new FileReader();
+        fr.readAsDataURL(file);
+
+        fr.onload = function() {
+            // socket.emit('sendImage', {
+            //     username: username,
+            //     avatar: avatar,
+            //     img: fr.result
+            // })
+            console.log(fr.result);
+            var msg = {
+                userId: userId,
+                username: username,
+                avatar: avatar,
+                content: fr.result,
+                type : 3
+            };
+            socket.send(JSON.stringify(msg));
+        }
+    });
+
+
+
+    // 表情功能
+    $('.face').on('click', function() {
+        $('#content').emoji({
+            button: '.face',
+            position: 'topRight',
+            showTab: false,
+            animation: 'fade',
+            icons: [
+                {
+                    name: 'emoji',
+                    path: '/asserts/chatroom/lib/jquery-emoji/img/emoji/',
+                    maxNum: 84,
+                    //excludeNums: [41, 45, 54],
+                    file: '.png',
+                    placeholder: '#emoji_{alias}#'
+                }
+            ]
+        })
+    });
+
+    // 保存聊天记录
+    $('#save').on('click', function() {
+        if ($('#loginUserId').val() == ""){
+            return alert('请先登录');
+        }
+        $.post("/saveChatRecord",
+            {
+                userId: userId,
+                chatRoomId: chatRoomId
+            },
+            function(data) {
+            alert(data);
+        });
+    });
+
+    // 下载聊天记录
+    $('#download').on('click', function() {
+        $.post("/downloadChatRecord",
+            {
+                userId: userId,
+                chatRoomId: chatRoomId
+            },
+            function(data) {
+                alert(data);
+            });
+    });
+
+</script>
+</html>
