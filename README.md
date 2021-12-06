@@ -1,5 +1,6 @@
 # soft-talk
-
+- 本项目名称为轻聊圈子，主要功能为公共聊天室+发动态；
+- 此间只包括项目前端代码，前端采用Vue.js和element-ui实现
 ## Project setup
 ```
 npm install
