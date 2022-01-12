@@ -43,9 +43,9 @@ axios.interceptors.response.use(function (response) { // ①10010 token过期（
 
     })
 
-  } else if (response.data.token) { // 判断token是否存在，如果存在说明需要更新token
+  } else if (response.token) { // 判断token是否存在，如果存在说明需要更新token
 
-    Storage.localSet('token', response.data.token) // 覆盖原来的token(默认一天刷新一次)
+    Storage.localSet('token', response.token) // 覆盖原来的token(默认一天刷新一次)
 
   }
 

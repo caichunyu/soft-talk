@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import store from  '../store';
+import store from '../store';
 import {mapMutations, mapActions} from 'vuex';
 
 import qs from "qs";
@@ -35,46 +35,46 @@ export default {
   name: "Login",
   data() {
     return {
-        loginName: '',
-        userToken: '',
-        email: '',
-        password: ''
+      loginName: '',
+      userToken: '',
+      email: '',
+      password: ''
     }
   },
   methods: {
     ...mapMutations(['SET_USER_LOGIN_INFO', 'CHANGE_LOGIN']),
     ...mapActions(['login']),
     login: function () {
-      if (this.loginName&&this.password){
-      this.axios
-          .post('/user/login-by-loginName',
-              qs.stringify(
-                  {loginName: this.loginName, password: this.password}))
-          .then(res => {
-            // 请求成功
-            console.log(res.data);
-            this.userToken = res.data.data.token;
-            // this.$store.state.nickName=res.data.data.loginName
-            // console.log(this.$store)
-            localStorage.setItem('loginName', res.data.data.nickName);
-            localStorage.setItem('userId', res.data.data.id);
-            localStorage.setItem('headUrl', res.data.data.headUrl);
-            // 将用户token保存到vuex中
-            this.CHANGE_LOGIN({Authorization: this.userToken});
-            this.$router.push('/');
-          }).catch(error => {
-        // 请求失败，
-        console.log("登录失败！请检查登录信息是否正确！")
-      });
-    }else {
-      this.$message('不能为空')
-    }
+      if (this.loginName && this.password) {
+        this.axios
+            .post('/api/login',
+                // qs.stringify(
+                    {loginName: this.loginName, password: this.password})
+            .then(res => {
+              // 请求成功
+              console.log(res.data);
+              this.userToken = res.data.token;
+              // this.$store.state.nickName=res.data.data.loginName
+              // console.log(this.$store)
+              localStorage.setItem('loginName', res.data.data.nickName);
+              localStorage.setItem('userId', res.data.data._id);
+              localStorage.setItem('headUrl', res.data.data.headUrl);
+              // 将用户token保存到vuex中
+              this.CHANGE_LOGIN({Authorization: this.userToken});
+              this.$router.push('/');
+            }).catch(error => {
+          // 请求失败，
+          console.log("登录失败！请检查登录信息是否正确！",error)
+        });
+      } else {
+        this.$message('不能为空')
+      }
     },
     cancelPage: function () {
       // console.log( this.registerData,'name')
       this.$router.go(-1)
     },
-    toRegister(){
+    toRegister() {
       this.$router.push({path: '/register'})
     }
   },
@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style scoped>
-.to-register{
+.to-register {
   font-size: .6rem;
   width: 100%;
   display: flex;
@@ -92,6 +92,7 @@ export default {
   justify-content: flex-end;
   margin-bottom: -1rem;
 }
+
 .login-icon {
   width: 18rem;
   height: 6rem;

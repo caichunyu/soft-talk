@@ -48,15 +48,15 @@ export default {
       // this.$router.push({ path: '/login' })
       if (this.registerData.loginName&&this.registerData.nickName&&this.registerData.password){
       this.axios
-          .post('/user/insert',
+          .post('/api/user/insert',
              {
                nickName: this.registerData.nickName,
                 loginName:this.registerData.loginName,
                 password:this.registerData.password,
                 headUrl: 'https://softtalk.oss-cn-hangzhou.aliyuncs.com/avatar/default.jpg',
-                email: 'string',
-                sex: 0,
-                userType: 0
+                // email: 'string',
+                // sex: 0,
+                // userType: 0
               })
           .then(res => {
             if (res.data.code===1){
