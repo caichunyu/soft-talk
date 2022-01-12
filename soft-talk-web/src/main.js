@@ -15,9 +15,12 @@ Vue.prototype.axios = axios //全局注册，使用方法为:this.$axios
 Vue.config.productionTip = false
 
 //请求拦截器
+// axios.defaults.headers.post['Content-Type']='aapplication/x-www-form-urlencoded'
+
 axios.interceptors.request.use(
   config => {
-    config.baseURL='http://121.196.111.125:8007';
+    config.headers.post['Content-Type']='application/json; charset=utf-8'
+    config.baseURL='http://127.0.0.1:3000';
     if (localStorage.getItem('Authorization')) {
       config.headers.Authorization = localStorage.getItem('Authorization');
     }
