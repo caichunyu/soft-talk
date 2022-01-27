@@ -12,6 +12,9 @@ app.use(require('cors')()) //跨域
 // parse application/json
 app.use(express.json())
 
+app.use('/uploads', express.static(__dirname+'/uploads'))
+
+
 require('./routes/index')(app)
 require('./plugins/db')(app)
 

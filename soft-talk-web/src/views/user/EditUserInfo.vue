@@ -20,22 +20,18 @@
       <div style="display: flex;flex-direction: row; width: 100%;">选头像：
         <el-upload
             class="avatar-uploader"
-            action=""
+            :action="uploadUrl"
             :show-file-list="false"
-            ref="upload"
-            :on-change="handleChange"
-            :auto-upload="false"
-            accept=""
-        >
+            :on-success="res=>$set(model,'avatar', res.url)">
           <div  style="display: flex;flex-direction: row">
-            <img :src="headUrl" class="avatar">
+            <img v-if="model.avatar" :src="model.avatar" class="avatar">
 <!--            <div>-->
               <el-button slot="trigger" size="small" type="primary" style="margin-left: .3rem;">选取</el-button>
 <!--&lt;!&ndash;            </div>&ndash;&gt;-->
           </div>
 
         </el-upload>
-        <el-button style="margin-left: .3rem;height: 2rem;" size="small" type="success" @click="submitForm">上传</el-button>
+<!--        <el-button style="margin-left: .3rem;height: 2rem;" size="small" type="success" @click="submitForm">上传</el-button>-->
 
       </div>
 <!--      <div>性别：-->
@@ -72,7 +68,10 @@ export default {
       email: '',
       sex: 0,
       nickName:'',
-      headUrl: 'https://softtalk.oss-cn-hangzhou.aliyuncs.com/avatar/default.jpg'
+      headUrl: 'https://softtalk.oss-cn-hangzhou.aliyuncs.com/avatar/default.jpg',
+      model:{
+        avatar:''
+      }
     }
   },
   mounted() {

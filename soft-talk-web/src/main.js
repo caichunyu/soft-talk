@@ -57,6 +57,21 @@ axios.interceptors.response.use(function (response) { // ①10010 token过期（
 
 })
 
+Vue.mixin({ //  相当于vue代码块让每个vue实例都运行
+  computed:{
+    uploadUrl(){
+      return 'http://127.0.0.1:3000/api/upload'
+    }
+  },
+  methods: {
+    getAuthHeaders() {
+      return {
+        Authorization: `Bearer ${localStorage.token || ''}`
+      }
+    }
+  }
+})
+
 new Vue({
   router,
   store,
