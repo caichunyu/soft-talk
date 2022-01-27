@@ -76,7 +76,7 @@ export default {
   },
   mounted() {
     if (localStorage.getItem('headUrl')){
-      this.headUrl = localStorage.getItem('headUrl');
+      this.model.avatar = localStorage.getItem('headUrl');
     }
   },
   methods: {
@@ -137,22 +137,20 @@ export default {
       // if (this.password === this.password1 && this.oldPassword) {
 
       this.axios
-          .post('/user/update',
+          .post('/api/user/update',
               {
                 id: this.$store.state.userId,
-                email: "string",
-                headUrl: this.headUrl,
-                nickName: this.nickName,
-                sex: 0
+                headUrl: this.model.avatar,
+                nickName: this.nickName
               })
           .then(res => {
-            if (res.data.code === 1) {
-
+            if (res.data.code === 0) {
               this.$message(res.data.message)
-            } else if (res.data.code === 0) {
+            } else if (res.data.code === 1) {
               this.$message(res.data.message)
               this.$router.push('/');
-              localStorage.setItem('loginName',this.nickName)
+              localStorage.setItem('loginName',res.data.data.nickName)
+              localStorage.setItem('headUrl',res.data.data.headUrl)
             }
             console.log(res, 'res')
           })

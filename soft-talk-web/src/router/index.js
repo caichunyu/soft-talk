@@ -103,23 +103,23 @@ const router = new VueRouter({
 
 // 导航守卫
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
-// router.beforeEach((to, from, next) => {
-//   // iView.LoadingBar.start();
-//   if (to.path === '/register' || to.path === '/login'
-//     || to.path === '/'|| to.path === '/chatroom'||
-//     to.path === '/hello') {
-//     next();
-//   } else {
-//     let token = localStorage.getItem('Authorization');
-//     console.log('router', token)
-//     if (token) {
-//       next();
-//       console.log('router1')
-//     } else {
-//       console.log('router2')
-//       next('/login');
-//     }
-//   }
-// });
+router.beforeEach((to, from, next) => {
+  // iView.LoadingBar.start();
+  if (to.path === '/register' || to.path === '/login'
+    || to.path === '/'|| to.path === '/chatroom'||
+    to.path === '/hello') {
+    next();
+  } else {
+    let token = localStorage.getItem('Authorization');
+    console.log('router', token)
+    if (token) {
+      next();
+      console.log('router1')
+    } else {
+      console.log('router2')
+      next('/login');
+    }
+  }
+});
 
 export default router

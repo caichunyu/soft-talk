@@ -1,3 +1,4 @@
+const User = require("../../models/User");
 module.exports = app => {
   const express = require('express')
   const router = express.Router() //子路由
@@ -31,7 +32,7 @@ module.exports = app => {
   router.post('/user/insert', async (req, res) => {
     const loginName = req.body.loginName;
     // console.log(req.body, 'b',loginName)
-    const user = await User.findOne({loginName})
+    const user = await User.findOne({loginName}).update()
     console.log(user, 'u')
     if (user) {
       return res.send({
@@ -45,6 +46,28 @@ module.exports = app => {
         message: '注册成功',
       })
     }
+  })
+
+  //update userInfo
+  router.post('/user/update', async (req, res) => {
+    // const loginName = req.body.loginName;
+    console.log(req.body, 'body')
+    const user = {
+      data: await User.findByIdAndUpdate(req.body.id,{nickName:req.body.nickName,headUrl:req.body.headUrl},{new:true}),
+      code: 0,
+      message:''
+    }
+    console.log(user, 'u')
+    if (user.data) {
+      user.code=1
+      user.message='更新成功'
+      return res.send(user)
+    } else {
+      user.code=0
+      user.message= 'id不存在'
+      return res.send(user)
+    }
+
   })
 
   module.exports = router
