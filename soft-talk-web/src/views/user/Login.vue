@@ -9,7 +9,7 @@
   <!--  </mu-container>-->
 
   <div class="register-main">
-    <img class="login-icon" src="../assets/SoftTalk1.png">
+    <img class="login-icon" src="../../assets/SoftTalk1.png">
     <div class="register-main-all">
       <div>
         <h2>登 录</h2>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import store from '../store';
+import store from '../../store';
 import {mapMutations, mapActions} from 'vuex';
 
 import qs from "qs";
