@@ -20,7 +20,7 @@ Vue.config.productionTip = false
 axios.interceptors.request.use(
   config => {
     config.headers.post['Content-Type']='application/json; charset=utf-8'
-    config.baseURL='http://127.0.0.1:3000';
+    config.baseURL='http://127.0.0.1:3000/api';
     if (localStorage.getItem('Authorization')) {
       config.headers.Authorization = localStorage.getItem('Authorization');
     }

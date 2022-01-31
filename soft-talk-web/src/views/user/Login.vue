@@ -47,7 +47,7 @@ export default {
     login: function () {
       if (this.loginName && this.password) {
         this.axios
-            .post('/api/login',
+            .post('/login',
                 // qs.stringify(
                     {loginName: this.loginName, password: this.password})
             .then(res => {
@@ -56,7 +56,7 @@ export default {
               this.userToken = res.data.token;
               // this.$store.state.nickName=res.data.data.loginName
               // console.log(this.$store)
-              localStorage.setItem('loginName', res.data.data.nickName);
+              localStorage.setItem('loginName', res.data.data.loginName);
               localStorage.setItem('userId', res.data.data._id);
               localStorage.setItem('headUrl', res.data.data.headUrl);
               // 将用户token保存到vuex中
@@ -64,6 +64,7 @@ export default {
               this.$router.push('/');
             }).catch(error => {
           // 请求失败，
+          this.$message('登录失败！请检查登录信息是否正确！')
           console.log("登录失败！请检查登录信息是否正确！",error)
         });
       } else {

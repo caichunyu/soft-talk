@@ -5,7 +5,6 @@ import Home from "@/components/Home";
 import SideNav from "@/components/SideNav";
 import TopNav from "@/components/TopNav";
 import HelloWorld from "@/components/HelloWorld";
-import Login from "@/components/Login";
 import Register from '../views/register.vue'
 
 import AllDynamic from "../views/dynamic/AllDynamic";
@@ -17,6 +16,7 @@ import Comment from "@/views/dynamic/Comment";
 import Index from "../views/Index";
 import NewPassword from "../views/user/NewPassword";
 import EditUserInfo from "../views/user/EditUserInfo";
+import Login from "../views/user/Login";
 import ChatRoom from "../views/IM/ChatRoom";
 
 import ChatRecord from "@/views/user/ChatRecord";

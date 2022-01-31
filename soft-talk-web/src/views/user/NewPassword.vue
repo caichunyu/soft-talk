@@ -45,24 +45,27 @@ export default {
 
         this.axios
             .post('/user/update-password',
-                qs.stringify({
+                // qs.stringify(
+                    {
                   id: this.$store.state.userId,
                   newPassword: this.password,
                   oldPassword: this.oldPassword,
-                }))
+                })
+      // )
             .then(res => {
-              if (res.data.code === 2) {
+              if (res.data.code === 1) {
                 this.$router.push('/login');
                 this.$message(res.data.message);
               } else if (res.data.code === 0) {
                 this.$message(res.data.message);
-              }else if (res.data.code === 1) {
-                this.$message(res.data.message);
               }
+              // else if (res.data.code === 1) {
+              //   this.$message(res.data.message);
+              // }
               console.log(res, 'res')
             })
       }else {
-      this.$message('不能为空')
+      this.$message('新密码不能为空/不相等')
     }
     },
     cancelPage: function () {

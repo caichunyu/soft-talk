@@ -137,7 +137,7 @@ export default {
       // if (this.password === this.password1 && this.oldPassword) {
 
       this.axios
-          .post('/api/user/update',
+          .post('/user/update',
               {
                 id: this.$store.state.userId,
                 headUrl: this.model.avatar,

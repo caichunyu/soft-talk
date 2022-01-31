@@ -282,6 +282,7 @@ export default {
       // localStorage.setItem('headUrl','https://softtalk.oss-cn-hangzhou.aliyuncs.com/user_icon/default.jpg');
       localStorage.setItem('loginName', '');
       localStorage.setItem('chatName', '');
+      localStorage.setItem('userId', '');
       this.$router.push('/login')
     },
     toNewPass() {

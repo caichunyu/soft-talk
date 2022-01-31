@@ -48,7 +48,7 @@ export default {
       // this.$router.push({ path: '/login' })
       if (this.registerData.loginName&&this.registerData.nickName&&this.registerData.password){
       this.axios
-          .post('/api/user/insert',
+          .post('/user/insert',
              {
                nickName: this.registerData.nickName,
                 loginName:this.registerData.loginName,
