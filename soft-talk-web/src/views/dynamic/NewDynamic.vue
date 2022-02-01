@@ -30,7 +30,6 @@ export default {
         this.axios
             .post('/moments/insert', {
               "content": this.textarea,
-              "picUrl": "string",
               "userId": this.$store.state.userId
             })
             .then(res => {
