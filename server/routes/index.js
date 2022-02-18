@@ -2,7 +2,7 @@ module.exports = app => {
   //user部分
   require('./user/user')(app)
   const user = require('./user/user')
-  app.use('/api', require('./user/user'))
+  app.use('/api', user)
 
   //上传部分
   const multer = require('multer')
@@ -13,5 +13,9 @@ module.exports = app => {
     file.url = `http://localhost:3000/uploads/${file.filename}`
     res.send(file)
   })
+
+  //dynamic
+  const dynamic = require('./dynamic/dynamic')
+  app.use('/api', dynamic)
 
 }

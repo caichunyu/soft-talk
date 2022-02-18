@@ -1,4 +1,3 @@
-const User = require("../../models/User");
 module.exports = app => {
   const express = require('express')
   const router = express.Router() //子路由

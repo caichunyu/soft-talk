@@ -42,8 +42,7 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['SET_USER_LOGIN_INFO', 'CHANGE_LOGIN']),
-    ...mapActions(['login']),
+    ...mapMutations(['CHANGE_LOGIN']),
     login: function () {
       if (this.loginName && this.password) {
         this.axios
@@ -53,14 +52,15 @@ export default {
             .then(res => {
               // 请求成功
               console.log(res.data);
-              this.userToken = res.data.token;
+              // this.userToken = res.data.token;
               // this.$store.state.nickName=res.data.data.loginName
               // console.log(this.$store)
               localStorage.setItem('loginName', res.data.data.loginName);
               localStorage.setItem('userId', res.data.data._id);
               localStorage.setItem('headUrl', res.data.data.headUrl);
               // 将用户token保存到vuex中
-              this.CHANGE_LOGIN({Authorization: this.userToken});
+              // this.CHANGE_LOGIN({Authorization: this.userToken}); // 用这个的话无法给store里的id成功赋值，奇怪？
+              this.CHANGE_LOGIN({Authorization:  res.data.token});
               this.$router.push('/');
             }).catch(error => {
           // 请求失败，
