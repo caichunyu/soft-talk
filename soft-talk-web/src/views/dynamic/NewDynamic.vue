@@ -28,7 +28,7 @@ export default {
     postDynamic() {
       if (this.textarea){
         this.axios
-            .post('/moments/insert', {
+            .post('/dynamic/insert', {
               "nickName":this.$store.state.loginName,
               "content": this.textarea,
               "userId": this.$store.state.userId

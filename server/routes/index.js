@@ -15,6 +15,7 @@ module.exports = app => {
   })
 
   //dynamic
+  // require('./dynamic/dynamic')(app)
   const dynamic = require('./dynamic/dynamic')
   app.use('/api', dynamic)
 
