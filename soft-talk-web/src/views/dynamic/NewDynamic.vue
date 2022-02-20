@@ -31,13 +31,14 @@ export default {
             .post('/dynamic/insert', {
               "nickName":this.$store.state.loginName,
               "content": this.textarea,
-              "userId": this.$store.state.userId
+              "userId": this.$store.state.userId,
+              "headUrl":localStorage.getItem('headUrl')
             })
             .then(res => {
               // 请求成功
               this.$message('发布成功！');
               this.$router.push('/alldynamic')
-              console.log(res.data, 'postDynamic');
+              console.log(res.data, 'postDynamic___---',this.$store.state);
             }).catch(error => {
           // 请求失败，
           this.console.error("登录失败！请检查登录信息是否正确！")

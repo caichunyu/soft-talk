@@ -5,7 +5,7 @@
         <div class="dynamic">
           <div class="dynamic-top">
             <img class="user-icon" :src=item.headUrl>
-            <b style="margin-left: 0.2rem">昵称:{{ item.userNickName }}</b>
+            <b style="margin-left: 0.2rem">昵称:{{ item.nickName }}</b>
             <el-dropdown v-if="nickName===item.userNickName"
                 style="margin-left: 1rem; margin-top: .3rem;">
               <el-button icon="el-icon-more" style="padding: .5rem .5rem;">
@@ -80,10 +80,12 @@ export default {
     nowPage(p){
       console.log(p,'page now')
       this.axios
-          .post('/moments/list', {
+          .post('/dynamic/list',
+              {
             "currentPage":p,
             "pageSize": 10,
-          })
+          }
+          )
           .then(res => {
             // 请求成功
             this.getAllDynamicData = res.data.data;
@@ -106,13 +108,10 @@ export default {
     },
     getAllDynamic() {
       this.axios
-          .post('/moments/list', {
-            "currentPage": 1,
-            "pageSize": 9999,
-          })
+          .get('/dynamic/list', )
           .then(res => {
             // 请求成功
-            this.dynamicLists = res.data.data.length;
+            this.getAllDynamicData = res.data.data;
             console.log(  this.dynamicLists, '  this.dynamicLists');
           }).catch(error => {
         // 请求失败，

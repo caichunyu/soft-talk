@@ -1,17 +1,23 @@
-  const express = require('express')
-  const router = express.Router() //子路由
-  const Dynamic = require('../../models/Dynamic')
-  const User = require("../../models/User");
+const express = require('express')
+const router = express.Router() //子路由
+const Dynamic = require('../../models/Dynamic')
 
 //insert dynamic
-  router.post('/dynamic/insert', async (req, res) => {
-    console.log(req.body, 'b')
-    const model = await Dynamic.create(req.body)
-    return res.status(200).send({
-      code: 1,
-      message: '新建动态成功',
-    })
+router.post('/dynamic/insert', async (req, res) => {
+  console.log(req.body, 'b')
+  const model = await Dynamic.create(req.body)
+  return res.status(200).send({
+    code: 1,
+    message: '新建动态成功',
   })
-  //all dynamic
+})
+//all dynamic
+router.get('/dynamic/list', async (req, res) => {
+  return res.send({
+    code: 1,
+    message: '拉取动态列表成功',
+    data: await Dynamic.find()
+  })
+})
 
-  module.exports = router
+module.exports = router
