@@ -5,7 +5,7 @@
         <div class="dynamic">
           <div class="dynamic-top">
             <img class="user-icon" :src=item.headUrl>
-            <b style="margin-left: 0.2rem">昵称:{{ item.userNickName }}</b>
+            <b style="margin-left: 0.2rem">昵称:{{ item.nickName }}</b>
             <el-dropdown
                 style="margin-left: 1rem; margin-top: .3rem;">
               <el-button icon="el-icon-more" style="padding: .5rem .5rem;">
@@ -101,15 +101,13 @@ export default {
     },
     getAllDynamic() {
       this.axios
-          .post('/moments/list', {
-            "currentPage": 1,
-            "pageSize": 9999,
+          .post('/dynamic/list', {
             "userId": this.$store.state.userId
           })
           .then(res => {
             // 请求成功
-            this.dynamicLists = res.data.data.length;
-            console.log(  this.dynamicLists, '  this.dynamicLists');
+            this.getAllDynamicData = res.data.data;
+            console.log(  this.getAllDynamicData, '  this.dynamicLists');
           }).catch(error => {
         // 请求失败，
         this.console.error("登录失败！请检查登录信息是否正确！")

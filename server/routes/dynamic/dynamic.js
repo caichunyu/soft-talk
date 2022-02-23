@@ -11,12 +11,24 @@ router.post('/dynamic/insert', async (req, res) => {
     message: '新建动态成功',
   })
 })
+
 //all dynamic
 router.get('/dynamic/list', async (req, res) => {
   return res.send({
     code: 1,
     message: '拉取动态列表成功',
     data: await Dynamic.find()
+  })
+})
+
+//my dynamic && page dynamic
+router.post('/dynamic/list',async (req,res)=>{
+  const userId=req.body.userId;
+  console.log(await Dynamic.find({userId}))
+  return res.send({
+    code:1,
+    message: '拉取个人动态成功',
+    data: await Dynamic.find({userId})
   })
 })
 

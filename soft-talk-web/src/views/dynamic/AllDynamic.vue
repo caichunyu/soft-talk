@@ -72,7 +72,7 @@ export default {
     };
   },
   mounted() {
-    this.nowPage();
+    // this.nowPage();
     this.getAllDynamic();
     this.nickName = localStorage.getItem('loginName')
   },
