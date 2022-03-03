@@ -54,12 +54,10 @@ export default {
     editDynamic() {
       if (this.textarea){
       this.axios
-          .post('/replies/insert', {
+          .post('/comment/insert', {
             "content": this.textarea,
-            "picUrl": "string",
-            "toType": 0,
             "userId": this.$store.state.userId,
-            "momentsId": this.$route.params.id //动态的id
+            "dynamicsId": this.$route.params.id //动态的id
           })
           .then(res => {
             // 请求成功

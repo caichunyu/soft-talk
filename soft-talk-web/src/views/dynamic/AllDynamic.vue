@@ -23,7 +23,7 @@
           </div>
           <div class="dynamic-top" style="margin-left: 2.5rem">{{ item.content }}</div>
           <div class="dynamic-edit">
-            <el-button @click="toComment(item.id)" size="mini" class="allDynamic-butt"
+            <el-button @click="toComment(item._id)" size="mini" class="allDynamic-butt"
                        icon="el-icon-chat-square"></el-button>
             <el-button v-if="getAllDynamicData[index].ifLike === 1" size="mini" class="allDynamic-butt"
                        @click="offStar(index)" icon="el-icon-star-on"></el-button>

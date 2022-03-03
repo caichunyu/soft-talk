@@ -32,4 +32,14 @@ router.post('/dynamic/list',async (req,res)=>{
   })
 })
 
+//insert comment
+router.post('/comment/insert', async (req, res) => {
+  console.log(req.body, 'b')
+  // const model = await Dynamic.create(req.body)
+  // return res.status(200).send({
+  //   code: 1,
+  //   message: '新建动态成功',
+  // })
+})
+
 module.exports = router
